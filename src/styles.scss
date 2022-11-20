@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+
+div.current-time p {
+  margin-right: 25px;
+  margin-bottom: 10px;
+}
+
+form.dose-form {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+div.content {
+  margin-left: 25px;
+  margin-right: 25px;
+  width: 800px;
+  margin: 0 auto;
+}
+
+input#dosage {
+  width: 110px;
+}
