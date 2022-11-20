@@ -2,14 +2,8 @@
   {
     "name": "Dexedrine IR",
     "synonyms": "Dexedrine",
-    "half-life": {
-      "min": "9h",
-      "max": "11h"
-    },
-    "bioavailability": {
-      "min": 75,
-      "max": 100
-    }
+    "half-life": "11h",
+    "bioavailability": 100
   }
 ]
 

@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import Medications from '../../data/medications.json';
 import { DataService } from './services/data.service';
+import { BloodLevelService } from './services/blood-level.service';
 import { Dose } from './models/dose';
 import { Observable } from 'rxjs';
 
@@ -15,14 +16,15 @@ export class AppComponent implements OnInit {
   newDoseForm: FormGroup;
   title = 'bloodlevel';
   public now:Date = new Date();
-  doses: Dose[]|null;
-  dosage_history: Dose[]|[] = [];
   dose_history: Dose[]|[] = [];
+  bloodLevel:number|undefined = 0;
+  totalDosage:number = 0;
 
   med_names = Medications.map(med => { return med.name });
 
   constructor(
     private dataService: DataService,
+    private bloodLevelService: BloodLevelService
   ){
     this.newDoseForm = new FormGroup({
       date: new FormControl('2022-11-10'),
@@ -31,41 +33,32 @@ export class AppComponent implements OnInit {
       dosage_unit: new FormControl('mg'),
       substance: new FormControl('')
     });
-    setInterval( () => { this.now = new Date(); }, 1);
-    console.log(Medications);
+    setInterval( () => {
+      this.now = new Date(); 
+      this.bloodLevel = this.bloodLevelService.calculateBloodLevel(this.now);
 
-    this.doses = this.getDoses();
+    }, 1000);
+
 
     this.dataService.doseHistory.subscribe( (data:Dose[]|[]) => {
       this.dose_history = data;
+      this.totalDosage = this.calculate_total_dosage(data);
+      this.bloodLevel = this.bloodLevelService.calculateBloodLevel(this.now);
     });
+  }
 
-    this.dataService.getAllDoses().subscribe( (data:Dose[]) => {
-      console.log(data);
-      this.dosage_history = data;
-      console.log(this.dosage_history);
-    });
-
-
+  calculate_total_dosage(data:Dose[]|[]):number {
+    var total = 0;
+    for (let i = 0; i < data.length; i++) {
+      total += data[i].dosage;
+    }
+    return total
   }
 
   ngOnInit(): void {
-    this.getDoses();
-  }
-
-  getDosageHistory(): void {
-    this.dataService.getAllDoses().subscribe( (data:Dose[]) => {
-      console.log(data);
-      this.dosage_history = data;
-    });
-  }
-
-  getDoses(): Dose[] {
-    return this.dataService.getDoses();
   }
 
   changeSubstance(e: any) {
-    console.log(this.newDoseForm);
     this.newDoseForm.controls['substance'].setValue(e.target.value, {
       onlySelf: true,
     });
@@ -85,13 +78,10 @@ export class AppComponent implements OnInit {
     }
   }
 
-  deleteDose(dose:Dose) {
+  deleteDose(dose:Dose):void {
     this.dataService.deleteDose(dose).subscribe( (data:any) => {
-      console.log("Successfullly deleted dose");
-      console.log(data)
+      console.log("Successfullly deleted dose record");
     });
-
   }
-
 
 }

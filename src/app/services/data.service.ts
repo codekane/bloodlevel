@@ -20,6 +20,9 @@ export class DataService {
     });
   }
 
+  watchDoseHistory():Observable<any> {
+    return this.doseHistory.asObservable();
+  }
 
   getDoses(): Dose[] {
     return DOSES
