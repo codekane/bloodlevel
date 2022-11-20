@@ -33,10 +33,11 @@ export class AppComponent implements OnInit {
       dosage_unit: new FormControl('mg'),
       substance: new FormControl('')
     });
+      this.now = new Date(); 
+      this.bloodLevel = this.bloodLevelService.calculateBloodLevel(this.now)
     setInterval( () => {
       this.now = new Date(); 
       this.bloodLevel = this.bloodLevelService.calculateBloodLevel(this.now);
-
     }, 1000);
 
 
