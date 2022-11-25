@@ -20,3 +20,30 @@ div.content {
 input#dosage {
   width: 110px;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  .column {
+    width: 50%;
+    //height: 300px;
+    overflow-y: scroll;
+  }
+}
+
+
+.column {
+  display: flex;
+  flex-direction: column;
+
+  &.dosage-history {
+    height: 300px;
+    overflow-y: scroll;
+  }
+}
+
+table.dosage-history {
+  max-height: 400px;
+  overflow-y: scroll;
+}

@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import Medications from '../../data/medications.json';
 import { DataService } from './services/data.service';
 import { BloodLevelService } from './services/blood-level.service';
+import { LevelChartComponent } from './level-chart/level-chart.component';
 import { Dose } from './models/dose';
 import { Observable } from 'rxjs';
 
