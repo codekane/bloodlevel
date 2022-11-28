@@ -1,0 +1,51 @@
+  <!--<div class="level-chart-container" height="400" width="400">
+    <app-level-chart></app-level-chart>
+    </div>-->
+    <div class="row">
+      <div class="column">
+        <div class="current-levels">
+          <div class="current-time">
+            <p>It is currently</p>
+            <p>{{now}}</p>
+          </div>
+          <div class="current-bloodlevel">
+            <p>Current Bloodlevel: {{bloodLevel}}mg</p>
+            <p>Total Dosage: {{totalDosage}}mg</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column" width="400" height="300">
+    </div>
+    <div class="row">
+      <div class="column">
+        <div class="dose-form-container">
+          <h3>New Dose</h3>
+          <app-old-dose-form></app-old-dose-form>
+        </div>
+      </div>
+
+      <div class="column dosage-history">
+        <table class="dosage-history">
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Dosage</th>
+            <th>Substance</th>
+            <th>Delete</th>
+          </tr>
+          <tr *ngFor="let dose of dose_history.slice().reverse()">
+            <td>{{dose.id}}</td>
+            <td>{{dose.date}}</td>
+            <td>{{dose.time}}</td>
+            <td>{{dose.dosage}}{{dose.dosage_unit}}</td>
+            <td>{{dose.substance}}</td>
+            <td><a href="" (click)="$event.preventDefault();this.deleteDose(dose)">Delete</a></td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+

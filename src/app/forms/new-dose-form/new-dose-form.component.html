@@ -1,0 +1,35 @@
+<form [formGroup]="newDoseForm" (ngSubmit)="newDose()" class="dose-form" id="new-dose-form">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Substance</mat-label>
+    <mat-select [(ngModel)]="selectedSubstance" name="substance">
+      <mat-option *ngFor="let substance of substances" [value]="substance">
+        {{substance.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field apperance="fill">
+    <mat-label>Dosage</mat-label>
+    <input matInput type="number">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>ROI</mat-label>
+    <mat-select [(ngModel)]="selectedROI" name="ROI">
+      <mat-option *ngFor="let route of ROIList" [value]="route">
+        {{route}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose date and time" [ngModel]="selectedDatetime">
+    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+  </mat-form-field>
+
+  <button mat-raised-button type="submit">Add</button>
+
+</form>

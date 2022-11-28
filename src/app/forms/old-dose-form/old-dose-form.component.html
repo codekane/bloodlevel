@@ -1,0 +1,32 @@
+<form [formGroup]="newDoseForm" (ngSubmit)="addDose(newDoseForm)" class="dose-form" id="new-dose-form">
+  <div>
+    <label>Date:
+      <input formControlName="date" type="date" value="2022-11-19" />
+    </label>
+  </div>
+  <div>
+    <label>Time:
+      <input formControlName="time" type="time" />
+    </label>
+  </div>
+  <div>
+    <label>Dosage
+      <input formControlName="dosage" type="number" placeholder="15" />
+    </label>
+  </div>
+  <div>
+    <label>Dosage Unit
+      <input formControlName="dosage_unit" type="text" value="mg" />
+    </label>
+  </div>
+  <div>
+    <label>Substance:
+      <select formControlName="substance" (change)="changeSubstance($event)" id="substance">
+        <option value="">Choose Substance</option>
+        <option *ngFor="let medication of med_names" [ngValue]="medication">{{medication}}</option>
+      </select>
+    </label>
+  </div>
+  <button type="submit">Add</button>
+</form>
+

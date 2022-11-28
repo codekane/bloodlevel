@@ -37,13 +37,23 @@ export class DataService {
     return this.http.get<Dose>(this.DOSE_URL + `/${id}`)
   }
 
-  addDose(dose:Dose):Observable<Dose> {
-    return this.http.post<Dose>(this.DOSE_URL, JSON.stringify(dose))
+  addDose(dose:Dose):void {
+    this.http.post<Dose>(this.DOSE_URL, JSON.stringify(dose)).subscribe( (data:Dose) => {
+      this.getAllDoses().subscribe( (data:Dose[]) => {
+        this.doseHistory.next(data);
+      });
+    });
   }
 
   deleteDose(dose:Dose) {
     var url = this.DOSE_URL + `/${dose.id}`;
-    console.log(url);
+
+    this.http.delete<any>(url).subscribe( (data:any) => {
+      this.getAllDoses().subscribe( (data:Dose[]) => {
+        this.doseHistory.next(data);
+      });
+    });
+
     return this.http.delete<any>(url)
   }
 
