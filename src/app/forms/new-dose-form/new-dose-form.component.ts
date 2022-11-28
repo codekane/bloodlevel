@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 //import { MatSelectModule } from '@angular/material/select'
+import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 
 
+interface DoseRecord {
+  timestamp: Date;
+  substance_id: number;
+  ROI: string;
+  dosage: number;
+  dosage_unit: string;
+}
 
 interface Substance {
   id: number;
@@ -50,18 +58,38 @@ export class NewDoseFormComponent implements OnInit {
     {substance_id: 1, ROI: "Rectal", bioavailability: "90.00", tOnset: "00:15:00", tMax: "03:00:00", tHalf: "11:00:00"}
   ]
 
+  UNITS: string[] = ["mg"]
 
   constructor() {
     this.newDoseForm = new FormGroup({
       substance: new FormControl(''),
-      ROI: new FormControl('')
+      ROI: new FormControl(''),
+      timestamp: new FormControl(new Date()),
+      dosage: new FormControl(''),
+      dosage_unit: new FormControl('mg')
     });
   }
   newDose() {
-    console.log("Fucking Angular");
+    if (!this.newDoseForm.valid) {
+      false;
+    } else {
+      const record:DoseRecord = {
+        timestamp: this.newDoseForm.value.timestamp,
+        substance_id: this.newDoseForm.value.substance.id,
+        ROI: this.newDoseForm.value.ROI,
+        dosage: this.newDoseForm.value.dosage,
+        dosage_unit: this.newDoseForm.value.dosage_unit
+      }
+    }
+
+    //const dose = this.newDoseForm.value as Dose;
+    //this.doseDataService.recordDose(dose);
+    //console.log(event);
+    console.log(this.newDoseForm.value);
+    this.newDoseForm.reset();
   }
 
   ngOnInit(): void {
-      }
+  }
 
 }

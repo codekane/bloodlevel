@@ -60,6 +60,7 @@ import { MatTableModule } from '@angular/material/table';
 
 // DateTime Picker
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OldDoseFormComponent } from './forms/old-dose-form/old-dose-form.component';
 
@@ -94,7 +95,7 @@ const routes: Routes = [
     MatBadgeModule, MatChipsModule, MatIconModule, MatProgressSpinnerModule, MatProgressBarModule,
     MatBottomSheetModule, MatDialogModule, MatSnackBarModule, MatTooltipModule, MatPaginatorModule,
     MatSortModule, MatTableModule,
-    NgxMatDatetimePickerModule, NgxMatTimepickerModule
+    NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule
 
   ],
   exports: [
@@ -107,7 +108,7 @@ const routes: Routes = [
     MatTabsModule, MatTreeModule, MatButtonModule, MatButtonToggleModule, MatBadgeModule, MatChipsModule,
     MatIconModule, MatProgressSpinnerModule, MatProgressBarModule, MatBottomSheetModule, MatDialogModule,
     MatSnackBarModule, MatTooltipModule, MatPaginatorModule, MatSortModule, MatTableModule,
-    NewDoseFormComponent, NgxMatDatetimePickerModule, NgxMatTimepickerModule,
+    NewDoseFormComponent, NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule,
     OldDoseFormComponent, Version1Component
 
   ],

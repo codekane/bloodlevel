@@ -1,35 +1,53 @@
-<form [formGroup]="newDoseForm" (ngSubmit)="newDose()" class="dose-form" id="new-dose-form">
+<form [formGroup]="newDoseForm" (ngSubmit)="newDose()" class="dose-form" id="new-dose-form" style="width: 400px;">
 
-  <mat-form-field appearance="fill">
-    <mat-label>Substance</mat-label>
-    <mat-select [(ngModel)]="selectedSubstance" name="substance">
-      <mat-option *ngFor="let substance of substances" [value]="substance">
-        {{substance.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <p>
+    <mat-form-field appearance="fill">
+      <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose date and time" formControlName="timestamp">
+      <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+    </mat-form-field>
+  </p>
 
-  <mat-form-field apperance="fill">
-    <mat-label>Dosage</mat-label>
-    <input matInput type="number">
-  </mat-form-field>
+  <p>
 
-  <mat-form-field appearance="fill">
-    <mat-label>ROI</mat-label>
-    <mat-select [(ngModel)]="selectedROI" name="ROI">
-      <mat-option *ngFor="let route of ROIList" [value]="route">
-        {{route}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 50%;">
+      <mat-label>Substance</mat-label>
+      <mat-select formControlName="substance" name="substance">
+        <mat-option *ngFor="let substance of substances" [value]="substance">
+          {{substance.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 50%;">
+      <mat-label>ROI</mat-label>
+      <mat-select formControlName="ROI" name="ROI">
+        <mat-option *ngFor="let route of ROIList" [value]="route">
+          {{route}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field apperance="fill" style="width: 33.3%;">
+      <mat-label>Dosage</mat-label>
+      <input matInput #dosage formControlName="dosage" type="number" class="form-control" name="dosage">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 33.3%;">
+      <mat-label>Dosage Unit</mat-label>
+      <mat-select formControlName="dosage_unit" name="dosage_unit">
+        <mat-option *ngFor="let unit of UNITS" [value]="unit">
+          {{unit}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button type="submit" style="width: 33.3%;">Add</button>
+  </p>
 
 
-  <mat-form-field appearance="fill">
-    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose date and time" [ngModel]="selectedDatetime">
-    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
-  </mat-form-field>
 
-  <button mat-raised-button type="submit">Add</button>
+
 
 </form>
