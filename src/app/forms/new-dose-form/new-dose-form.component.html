@@ -10,19 +10,29 @@
 
   <p>
 
-    <mat-form-field appearance="fill" style="width: 50%;">
+    <mat-form-field appearance="fill" style="width: 33.3%;">
       <mat-label>Substance</mat-label>
-      <mat-select formControlName="substance" name="substance">
-        <mat-option *ngFor="let substance of substances" [value]="substance">
+      <mat-select formControlName="substance" name="substance" (selectionChange)="onSelectSubstance($event.value)">
+        <mat-option *ngFor="let substance of substanceData" [value]="substance">
           {{substance.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" style="width: 50%;">
+    <mat-form-field appearance="fill" style="width: 33.3%;">
+      <mat-label>Dosage Form</mat-label>
+      <mat-select formControlName="dosage_form" name="dosage_form">
+        <mat-option [value]=""></mat-option>
+        <mat-option *ngFor="let form of dosage_form_options" [value]="form">
+          {{form}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 33.3%;">
       <mat-label>ROI</mat-label>
       <mat-select formControlName="ROI" name="ROI">
-        <mat-option *ngFor="let route of ROIList" [value]="route">
+        <mat-option *ngFor="let route of ROI_options" [value]="route">
           {{route}}
         </mat-option>
       </mat-select>

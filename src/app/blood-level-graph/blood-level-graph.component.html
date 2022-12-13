@@ -1,0 +1,34 @@
+
+<div style="display: flex; flex-direction: row; height: 200px; width: 800px; margin-top: 50px;">
+
+  <div style="display: flex; flex-direction: column; height: 200px;">
+    <div class="substances-controller" style="width: 200px;">
+      <div class="substance-controller" style="display: flex; flex-direction: row;">
+        <div style="width: 50px; height: 50px;">
+          <div style="width: 30px; height: 30px; border-radius: 30px; background-color: red; margin: 0 auto;"></div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <div>Dexedrine</div>
+          <div>Blood Level: 66.1mg</div>
+        </div>
+      </div>
+
+      <div class="substance-controller" style="display: flex; flex-direction: row;">
+        <div style="width: 50px; height: 50px;">
+          <div style="width: 30px; height: 30px; border-radius: 30px; background-color: green; margin: 0 auto;"></div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <div>Clonazepam</div>
+          <div>Blood Level: 0.5mg</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div style="width: 600px; height: 200px;">
+    <canvas width="600" height="200" baseChart [data]="chartData" [options]="chartOptions" [type]="'line'" [legend]="false"></canvas>
+  </div>
+
+
+</div>

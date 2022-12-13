@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { BloodLevelService } from '../services/blood-level.service';
+import { SubstanceDataService } from '../services/substance-data.service';
 import { Dose } from '../models/dose';
 
 @Component({

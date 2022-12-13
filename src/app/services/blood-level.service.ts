@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Dose } from '../models/dose';
 import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { DataService } from './data.service';
+import { DosageDataService } from './dosage-data.service';
 import { map } from 'rxjs/operators';
 import Medications from '../../../data/medications.json';
 
@@ -14,19 +15,33 @@ export class BloodLevelService {
   dosageHistorySub: Subscription;
   dose_history:any;
 
-  constructor(private dataService: DataService) {
+  doseRecordSub:Subscription;
+  doseRecordData:any;
+
+  constructor(
+    private dataService: DataService,
+    private dosageDataService: DosageDataService
+  ) {
     this.dosageHistorySub = this.dataService.watchDoseHistory().subscribe( (data:any) => {
       this.dose_history = data;
     });
-  }
-  watchBloodLevel():Observable<any> {
-    return this.bloodLevel.asObservable();
+
+    this.doseRecordSub = this.dosageDataService.watchDoseHistory().subscribe( (data:any) => {
+      this.doseRecordData = data;
+    });
   }
 
   // Calculate how much of a dose is remaining after the elapsed time between start and end, based on half-life
   half_life_effect(dose:number, half_life:number, elapsed_time:number) {
     return dose * Math.pow(0.5, elapsed_time / half_life);
   }
+
+
+
+  watchBloodLevel():Observable<any> {
+    return this.bloodLevel.asObservable();
+  }
+
 
   add_datetime_to_dose_history(dose_history:any) {
     return dose_history.map( (dose:any) => {

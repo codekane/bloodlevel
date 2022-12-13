@@ -66,7 +66,13 @@ import { OldDoseFormComponent } from './forms/old-dose-form/old-dose-form.compon
 
 import { BloodLevelService } from './services/blood-level.service';
 import { DataService } from './services/data.service';
+import { DosageDataService } from './services/dosage-data.service';
 import { Version1Component } from './version1/version1.component';
+import { DoseHistoryComponent } from './tables/dose-history/dose-history.component';
+import { SubstanceDataService } from './services/substance-data.service';
+
+import { NgChartsModule } from 'ng2-charts';
+import { BloodLevelGraphComponent } from './blood-level-graph/blood-level-graph.component';
 
 
 const routes: Routes = [
@@ -83,6 +89,8 @@ const routes: Routes = [
     DashboardComponent,
     OldDoseFormComponent,
     Version1Component,
+    DoseHistoryComponent,
+    BloodLevelGraphComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, AppRoutingModule, RouterModule.forRoot(routes),
@@ -95,9 +103,9 @@ const routes: Routes = [
     MatBadgeModule, MatChipsModule, MatIconModule, MatProgressSpinnerModule, MatProgressBarModule,
     MatBottomSheetModule, MatDialogModule, MatSnackBarModule, MatTooltipModule, MatPaginatorModule,
     MatSortModule, MatTableModule,
-    NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule
-
-  ],
+    NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule,
+    NgChartsModule
+    ],
   exports: [
     BrowserModule, HttpClientModule, AppRoutingModule, RouterModule,
     FormsModule, ReactiveFormsModule,
@@ -109,10 +117,10 @@ const routes: Routes = [
     MatIconModule, MatProgressSpinnerModule, MatProgressBarModule, MatBottomSheetModule, MatDialogModule,
     MatSnackBarModule, MatTooltipModule, MatPaginatorModule, MatSortModule, MatTableModule,
     NewDoseFormComponent, NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule,
-    OldDoseFormComponent, Version1Component
+    OldDoseFormComponent, Version1Component, DoseHistoryComponent, BloodLevelGraphComponent, NgChartsModule
 
   ],
-  providers: [BloodLevelService, DataService],
+  providers: [BloodLevelService, DataService, DosageDataService, SubstanceDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
