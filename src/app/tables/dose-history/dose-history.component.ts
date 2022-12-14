@@ -39,7 +39,7 @@ export class DoseHistoryComponent implements OnInit {
 
     this.doseRecordSub = this.dosageDataService.watchDoseHistory().subscribe ( (data: DoseRecords|undefined) => {
       if (data && data.dose_records) {
-        this.dose_history = data.dose_records;
+        this.dose_history = data.dose_records.sort().reverse();
         this.dose_history = [...this.dose_history];
       }
     });

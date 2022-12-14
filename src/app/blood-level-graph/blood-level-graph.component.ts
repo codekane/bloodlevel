@@ -60,6 +60,7 @@ export class BloodLevelGraphComponent implements OnInit {
         this.doseRecordData = data.dose_records;
         if (this.substanceData && this.doseRecordData) {
           this.doseDataSet = this.doseDataFactoryService.createDoseDataSet(this.doseRecordData, this.substanceData);
+          console.log(this.doseDataSet);
           this.chartDataPoints = this.getChartData(this.startDate, this.endDate);
           this.setChartData();
         }
@@ -94,6 +95,18 @@ export class BloodLevelGraphComponent implements OnInit {
     this.setChartData();
   }
 
+  showAllTimeData() {
+    let start = new Date("2022-11-19");
+    let today = new Date();
+    let end = new Date(today.setDate(today.getDate() + 2));
+    this.startDate = start;
+    this.endDate = end;
+    this.setChartData();
+    //this.bloodGraphRangeForm.controls['startDate'].setValue = start;
+    //this.bloodGraphRangeForm.controls['endDate'].setValue = end;
+
+  }
+
 
   getDatesInRange(start:Date, end:Date):Date[] {
     for(var arr=[],dt=new Date(start); dt<= new Date(end); dt.setDate(dt.getDate()+1)) {
@@ -115,13 +128,19 @@ export class BloodLevelGraphComponent implements OnInit {
     let dataset = this.doseDataSet.filter( (data:DoseData) =>
       data.datestamp && data.datestamp <= end && data.endstamp && data.endstamp >= start
     ).sort( (a:DoseData, b:DoseData):number => {return +a.datestamp! - +b.datestamp!});
+    console.log(dataset);
 
     let output:ChartDataObject = {}
     let current = new Date(start);
     while (current <= end) {
       let level = 0;
       for (let i=0; i < dataset.length; i++) {
-        level += dataset[i].calculateBloodLevel(current)
+        let dose = dataset[i];
+        if (dose.datestamp! > current) { continue } // Prevent later doses in the set from affecting the reading from earlier ones.
+        let bloodLevel = dose.calculateBloodLevel(current);
+        //console.log(`at ${current.toLocaleString()} level of ${level} is increasing by ${bloodLevel} on account of ${dataset[i].id} from ${dose.datestamp!.toLocaleString()}`);
+        //level += dataset[i].calculateBloodLevel(current)
+        level += bloodLevel;
       }
 
       output[current.toLocaleString()] = level;

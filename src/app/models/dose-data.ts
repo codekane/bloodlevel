@@ -72,7 +72,7 @@ export class DoseData {
     if (!pharmacokinetics) { return 0 }
 
     let x:number = this.calculateHoursElapsed(time);
-    let bioavailability = Number(pharmacokinetics.bioavailability);
+    let bioavailability = Number(pharmacokinetics.bioavailability) / 100;
     let vd = 200; // Hardcoding this for now, since it's not set up to calculate, nor am I collecting patient data
     let ka = Number(pharmacokinetics.absorption_rate_constant);
     let ke = Number(substance.elimination_rate_constant);
