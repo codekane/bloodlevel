@@ -2,7 +2,7 @@ export interface Pharmacokinetics {
   substance_id: number;
   ROI: string;
   bioavailability: string;
-  tOnset: string;
+  tLag: string;
   tMax: string;
   tHalf: string;
   absorption_kinetics?: string;

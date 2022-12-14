@@ -1,6 +1,7 @@
 import { DoseRecord } from './dose-record';
 import { Substance } from './substance';
 import { Optional } from '@angular/core';
+import { DosageFormDose } from './dosage-form';
 export class DoseData {
   id?: number;
   substance_id: number;
@@ -71,14 +72,47 @@ export class DoseData {
     let pharmacokinetics = this.substance.pharmacokinetics.find(pharm => pharm.ROI == this.ROI)
     if (!pharmacokinetics) { return 0 }
 
-    let x:number = this.calculateHoursElapsed(time);
+    let time_elapsed:number = this.calculateHoursElapsed(time);
+    if (Number(pharmacokinetics.tLag) > time_elapsed)
+      return 0
+
+    let doses:DosageFormDose[]|undefined = undefined;
+    if (this.ROI == "Oral" && this.dosage_form_id && substance.dosage_forms) {
+      let dosage_form = substance.dosage_forms.find( form => form.id == this.dosage_form_id);
+      doses = dosage_form!.doses.map( dose => {
+        if (dose.dosage_unit == "%") {
+          dose.dosage = (Number(dose.dosage) / 100) * 30;
+          dose.dosage_unit = "mg";
+        }
+        return dose
+      });
+    }
     let bioavailability = Number(pharmacokinetics.bioavailability) / 100;
     let vd = 200; // Hardcoding this for now, since it's not set up to calculate, nor am I collecting patient data
     let ka = Number(pharmacokinetics.absorption_rate_constant);
     let ke = Number(substance.elimination_rate_constant);
-    let dose = Number(this.dosage);
 
-    return this.calculateSingleDoseConcentration(x, bioavailability, vd, ka, ke, dose);
+    if (!doses) {
+      let x:number = time_elapsed - Number(pharmacokinetics.tLag);
+      let dose = Number(this.dosage);
+      return this.calculateSingleDoseConcentration(x, bioavailability, vd, ka, ke, dose);
+
+    } else {
+      console.log("Found multiple doses!");
+      let total = 0;
+      for (let d in doses) {
+        let total_lag = Number(doses[d].tLag) + Number(pharmacokinetics.tLag);
+        if (total_lag > time_elapsed) {
+          total += 0
+        } else {
+          let x:number = time_elapsed - total_lag;
+          let dose = Number(doses[d].dosage);
+          total += this.calculateSingleDoseConcentration(x, bioavailability, vd, ka, ke, dose);
+        }
+      }
+      return total
+    }
+
   }
 
   // x=hours, bioavailability = 0.xx, vd = volume of distribution(L)

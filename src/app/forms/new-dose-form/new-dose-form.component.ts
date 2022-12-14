@@ -36,10 +36,10 @@ export class NewDoseFormComponent implements OnInit {
   ROIList: string[] = ["Oral", "Insufflated", "Sublingual", "Rectal"]
 
   pharmacokinetics: Pharmacokinetics[] = [
-    {substance_id: 1, ROI: "Oral", bioavailability: "90.00", tOnset: "01:00:00", tMax: "03:00:00", tHalf: "11:00:00"},
-    {substance_id: 1, ROI: "Insufflated", bioavailability: "90.00", tOnset: "00:15:00", tMax: "03:00:00", tHalf: "11:00:00"},
-    {substance_id: 1, ROI: "Sublingual", bioavailability: "90.00", tOnset: "00:15:00", tMax: "03:00:00", tHalf: "11:00:00"},
-    {substance_id: 1, ROI: "Rectal", bioavailability: "90.00", tOnset: "00:15:00", tMax: "03:00:00", tHalf: "11:00:00"}
+    {substance_id: 1, ROI: "Oral", bioavailability: "90.00", tLag: "0.8", tMax: "03:00:00", tHalf: "11:00:00"},
+    {substance_id: 1, ROI: "Insufflated", bioavailability: "90.00", tLag: "0.2", tMax: "03:00:00", tHalf: "11:00:00"},
+    {substance_id: 1, ROI: "Sublingual", bioavailability: "90.00", tLag: "0.2", tMax: "03:00:00", tHalf: "11:00:00"},
+    {substance_id: 1, ROI: "Rectal", bioavailability: "90.00", tLag: "0.2", tMax: "03:00:00", tHalf: "11:00:00"}
   ]
 
   dosage_forms: DosageForm[]|[] = [];

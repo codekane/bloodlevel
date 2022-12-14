@@ -6,7 +6,8 @@ export interface DosageForm {
 }
 
 export interface DosageFormDose {
-  dosage: string;
+  dosage: string|number;
   dosage_unit: string;
+  tLag: string|number;
   tOffset: string;
 }
