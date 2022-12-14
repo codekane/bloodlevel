@@ -5,4 +5,6 @@ export interface Pharmacokinetics {
   tOnset: string;
   tMax: string;
   tHalf: string;
+  absorption_kinetics?: string;
+  absorption_rate_constant?: string|number;
 }

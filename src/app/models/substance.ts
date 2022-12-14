@@ -6,4 +6,7 @@ export interface Substance {
   name: string;
   pharmacokinetics?: Pharmacokinetics[]|[];
   dosage_forms?: DosageForm[]|[];
+  volume_of_distribution?: string;
+  elimination_rate_constant?: string|number;
+  half_life?: string|number;
 }

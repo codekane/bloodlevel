@@ -9,17 +9,13 @@ import { DoseRecord } from '../models/dose-record';
 export class DosageDataService {
   API_URL = "http://localhost:8000/";
 
-  doseHistory = new BehaviorSubject<any[]|[]>([]);
+  doseHistory = new BehaviorSubject<DoseRecord[]|undefined>(undefined);
 
   constructor(
     private http: HttpClient,
   ) {
     this.getAllDoses();
-    //this.getAllDoses().subscribe( (data:any) => {
-    //  this.doseHistory.next(data);
-    //  console.log(data);
-    //});
-  }
+    }
 
   recordDose(dose:DoseRecord) {
     let post_url = this.API_URL + "dose/";
@@ -49,7 +45,6 @@ export class DosageDataService {
       this.doseHistory.next(data);
       console.log(data);
     });
-    //return this.http.get<any>(this.API_URL + "doses/");
   }
 
 }

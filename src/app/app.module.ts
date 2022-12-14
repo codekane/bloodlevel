@@ -61,6 +61,7 @@ import { MatTableModule } from '@angular/material/table';
 // DateTime Picker
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OldDoseFormComponent } from './forms/old-dose-form/old-dose-form.component';
 
@@ -70,6 +71,7 @@ import { DosageDataService } from './services/dosage-data.service';
 import { Version1Component } from './version1/version1.component';
 import { DoseHistoryComponent } from './tables/dose-history/dose-history.component';
 import { SubstanceDataService } from './services/substance-data.service';
+import { DoseDataFactoryService } from './services/dose-data-factory.service';
 
 import { NgChartsModule } from 'ng2-charts';
 import { BloodLevelGraphComponent } from './blood-level-graph/blood-level-graph.component';
@@ -103,7 +105,7 @@ const routes: Routes = [
     MatBadgeModule, MatChipsModule, MatIconModule, MatProgressSpinnerModule, MatProgressBarModule,
     MatBottomSheetModule, MatDialogModule, MatSnackBarModule, MatTooltipModule, MatPaginatorModule,
     MatSortModule, MatTableModule,
-    NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule,
+    NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule,MatNativeDateModule,
     NgChartsModule
     ],
   exports: [
@@ -116,11 +118,11 @@ const routes: Routes = [
     MatTabsModule, MatTreeModule, MatButtonModule, MatButtonToggleModule, MatBadgeModule, MatChipsModule,
     MatIconModule, MatProgressSpinnerModule, MatProgressBarModule, MatBottomSheetModule, MatDialogModule,
     MatSnackBarModule, MatTooltipModule, MatPaginatorModule, MatSortModule, MatTableModule,
-    NewDoseFormComponent, NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule,
-    OldDoseFormComponent, Version1Component, DoseHistoryComponent, BloodLevelGraphComponent, NgChartsModule
+    NewDoseFormComponent, NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule,MatNativeDateModule,
+    OldDoseFormComponent, Version1Component, DoseHistoryComponent, BloodLevelGraphComponent, NgChartsModule,
 
   ],
-  providers: [BloodLevelService, DataService, DosageDataService, SubstanceDataService],
+  providers: [BloodLevelService, DataService, DosageDataService, SubstanceDataService, DoseDataFactoryService, MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

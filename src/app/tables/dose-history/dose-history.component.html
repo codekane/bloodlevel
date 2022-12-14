@@ -1,4 +1,4 @@
-<table #doseHistoryTable mat-table [dataSource]="dose_history" style="width: 400px;" class="dosage-history">
+<table #doseHistoryTable mat-table [dataSource]="dose_history" style="width: 400px;" class="dosage-history" *ngIf="substanceData">
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> ID </th>
     <td mat-cell *matCellDef="let dose"> {{dose.id}} </td>
@@ -46,7 +46,6 @@
     <td mat-cell *matCellDef="let dose">
       <div (click)="clickEditDose($event, dose.id)"> Edit </div>
       <div (click)="clickDeleteDose($event, dose.id)"> Delete </div>
-
     </td>
 
   </ng-container>
@@ -54,27 +53,3 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-
-<!--
-<table class="dosage-history">
-  <tr>
-    <th>ID</th>
-    <th>Date</th>
-    <th>Time</th>
-    <th>Substance</th>
-    <th>Form</th>
-    <th>Dosage</th>
-    <th>ROI</th>
-  </tr>
-  <tr *ngFor="let dose of dose_history">
-    <td>{{dose.id}}</td>
-    <td>{{getDateFromTimestamp(dose.timestamp)}}</td>
-    <td>{{getTimeFromTimestamp(dose.timestamp)}}</td>
-    <td>{{getSubstanceName(dose.substance_id)}}</td>
-    <td>{{getDosageFormName(dose.substance_id, dose.dosage_form_id)}}</td>
-    <td>{{dose.dosage}}{{dose.dosage_unit}}</td>
-    <td>{{dose.ROI}}</td>
-  </tr>
-</table>
-
--->

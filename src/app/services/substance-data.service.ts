@@ -34,7 +34,11 @@ export class SubstanceDataService {
   }
 
   substanceNameFromID(id:number) {
-    return this.substanceData.getValue().filter(substance => substance.id == id)[0].name
+    let data = this.substanceData!.getValue();
+    console.log(id);
+    let substance = data.find(substance => substance.id == id)
+
+    return substance!.name!
   }
 
   dosageFormNameFromID(substance_id:number, dosage_form_id:any) {

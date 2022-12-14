@@ -1,34 +1,54 @@
 
-<div style="display: flex; flex-direction: row; height: 200px; width: 800px; margin-top: 50px;">
+<div class="graph-control">
 
-  <div style="display: flex; flex-direction: column; height: 200px;">
-    <div class="substances-controller" style="width: 200px;">
-      <div class="substance-controller" style="display: flex; flex-direction: row;">
-        <div style="width: 50px; height: 50px;">
-          <div style="width: 30px; height: 30px; border-radius: 30px; background-color: red; margin: 0 auto;"></div>
+  <div class="graph-substance-container">
+    <div class="substances-controller">
+
+      <!--
+      <mat-button-toggle-group name="graphSubstances" aria-label="Substances" multiple>
+        <mat-button-toggle *ngFor="let substance of substanceData" value="{{substance.id}}" style="width: 100%;">{{substance.name}}
+
+        </mat-button-toggle>
+
+      </mat-button-toggle-group>
+      -->
+
+
+      <div class="substance-controller" style="display: flex; flex-direction: row;" *ngFor="let substance of substanceData">
+        <div class="circle-container">
+          <div class="circle" style="background-color: red;"></div>
         </div>
         <div style="display: flex; flex-direction: column;">
-          <div>Dexedrine</div>
-          <div>Blood Level: 66.1mg</div>
+          <div>{{substance.name}}</div>
         </div>
       </div>
 
-      <div class="substance-controller" style="display: flex; flex-direction: row;">
-        <div style="width: 50px; height: 50px;">
-          <div style="width: 30px; height: 30px; border-radius: 30px; background-color: green; margin: 0 auto;"></div>
-        </div>
-        <div style="display: flex; flex-direction: column;">
-          <div>Clonazepam</div>
-          <div>Blood Level: 0.5mg</div>
-        </div>
-
-      </div>
     </div>
   </div>
+  <div style="width:600px; height: 250px;">
+    <div class="blood-graph-range-form" [formGroup]="bloodGraphRangeForm">
 
-  <div style="width: 600px; height: 200px;">
-    <canvas width="600" height="200" baseChart [data]="chartData" [options]="chartOptions" [type]="'line'" [legend]="false"></canvas>
-  </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Start Date</mat-label>
+        <input matInput formControlName="startDate" [matDatepicker]="startDatePicker" [value]="startDate" (dateChange)=startDateChange()>
+        <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>End Date</mat-label>
+        <input matInput formControlName="endDate" [matDatepicker]="endDatePicker" [value]="endDate" (dateChange)=endDateChange()>
+        <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker startView="year" [startAt]="endDate"></mat-datepicker>
+      </mat-form-field>
+
+      <button class="all-time-button" mat-raised-button>All Time</button>
+
+    </div>
+
+    <div style="width: 600px; height: 200px;">
+      <canvas *ngIf="doseRecordData && substanceData && doseDataSet && chartData" width="600" height="200" baseChart [data]="chartData" [options]="chartOptions" [type]="'line'" [legend]="false"></canvas>
+    </div>
 
 
 </div>
