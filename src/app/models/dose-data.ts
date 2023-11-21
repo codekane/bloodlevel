@@ -98,7 +98,6 @@ export class DoseData {
       return this.calculateSingleDoseConcentration(x, bioavailability, vd, ka, ke, dose);
 
     } else {
-      console.log("Found multiple doses!");
       let total = 0;
       for (let d in doses) {
         let total_lag = Number(doses[d].tLag) + Number(pharmacokinetics.tLag);
@@ -123,6 +122,11 @@ export class DoseData {
     let c = firstPart * secondPart;
 
     return c;
+  }
+
+  // t = hours; dose = mg; bioa=0.xx; ka = coefficient of absorption;
+  calculateDoseRemainingToBeAbsorbed(dose:number, bioa:number, ka:number, t:number):number {
+    return (dose * bioa) * Math.exp(-ka * t);
   }
 
   calculateHoursElapsed(time:Date):number {

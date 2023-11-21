@@ -78,8 +78,8 @@ import { BloodLevelGraphComponent } from './blood-level-graph/blood-level-graph.
 
 
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: '', component: Version1Component, pathMatch: 'full' }
+  { path: 'dashboard', component: Version1Component, pathMatch: 'full' },
+  { path: '', component: DashboardComponent }
 ];
 
 

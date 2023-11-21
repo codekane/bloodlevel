@@ -7,7 +7,7 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { SubstanceDataService } from '../services/substance-data.service';
 import { DosageDataService } from '../services/dosage-data.service';
 import { DoseDataFactoryService } from '../services/dose-data-factory.service';
-import { Subscription, zip } from 'rxjs';
+import { Subscription, Observable, zip, BehaviorSubject } from 'rxjs';
 import { Substance } from '../models/substance';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { DoseRecord, DoseRecords } from '../models/dose-record';
@@ -41,6 +41,9 @@ export class BloodLevelGraphComponent implements OnInit {
 
   chartDataPoints:ChartDataObject|undefined = undefined;
 
+  componentReadySub:Subscription;
+  componentReady = new BehaviorSubject<Boolean>(false);
+
   constructor(
     private substanceDataService:SubstanceDataService,
     private dosageDataService:DosageDataService,
@@ -53,20 +56,33 @@ export class BloodLevelGraphComponent implements OnInit {
 
     this.substanceSub = this.substanceDataService.watchSubstanceData().subscribe( (data:Substance[]) => {
       this.substanceData = data;
+      if (this.doseDataSet.length >= 1)
+        this.componentReady.next(true);
     });
 
     this.doseRecordSub = this.dosageDataService.watchDoseHistory().subscribe( (data:DoseRecords|undefined) => {
       if (data && data.dose_records) {
         this.doseRecordData = data.dose_records;
-        if (this.substanceData && this.doseRecordData) {
-          this.doseDataSet = this.doseDataFactoryService.createDoseDataSet(this.doseRecordData, this.substanceData);
-          console.log(this.doseDataSet);
-          this.chartDataPoints = this.getChartData(this.startDate, this.endDate);
-          this.setChartData();
-        }
+        if (this.substanceData != undefined)
+          this.componentReady.next(true);
+      }
+    });
+
+    this.componentReadySub = this.watchReadyState().subscribe( (fact:boolean) => {
+      if (fact == true && this.substanceData != undefined) {
+        this.doseDataSet = this.doseDataFactoryService.createDoseDataSet(this.doseRecordData, this.substanceData);
+        console.log(this.doseDataSet);
+        this.chartDataPoints = this.getChartData(this.startDate, this.endDate);
+        this.setChartData();
       }
     });
   }
+
+  watchReadyState():Observable<any> {
+    return this.componentReady.asObservable();
+  }
+
+  ngOnInit(): void {}
 
   getChartLabels():string[]|[] {
     if (this.chartDataPoints)
@@ -197,10 +213,6 @@ export class BloodLevelGraphComponent implements OnInit {
       }
     },
   };
-
-
-  ngOnInit(): void {
-  }
 
 
 }

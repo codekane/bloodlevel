@@ -5,6 +5,7 @@ import { SubstanceDataService } from '../../services/substance-data.service';
 import { DoseRecord, DoseRecords } from '../../models/dose-record';
 import { Subscription } from 'rxjs';
 import { Substance } from '../../models/substance';
+import { MatSortModule } from '@angular/material/sort';
 import * as moment from 'moment';
 
 @Component({
@@ -15,32 +16,21 @@ import * as moment from 'moment';
 export class DoseHistoryComponent implements OnInit {
   displayedColumns:string[] = ['id', 'datetime', 'substance', 'dosage', 'roi', 'actions'];
 
-
   doseRecordSub: Subscription;
   dose_history: DoseRecord[]|[] = [];
 
   substanceSub:Subscription;
   substanceData: Substance[]|undefined = undefined;
 
-
-
- // @ViewChild(MatTableModule) doseHistoryTable!: MatTableModule<any>;
-
   constructor(
     private dosageDataService: DosageDataService,
     private substanceDataService: SubstanceDataService
   ) {
-    //this.dosageDataService.doseHistory.subscribe( (data: DoseRecords|any) => {
-    //  if (data.dose_records) {
-    //    this.dose_history = data.dose_records;
-    //    this.dose_history = [...this.dose_history];
-    //  }
-    //});
-
     this.doseRecordSub = this.dosageDataService.watchDoseHistory().subscribe ( (data: DoseRecords|undefined) => {
       if (data && data.dose_records) {
         this.dose_history = data.dose_records.sort().reverse();
         this.dose_history = [...this.dose_history];
+        console.log(this.dose_history);
       }
     });
 
